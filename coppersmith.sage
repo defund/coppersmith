@@ -1,7 +1,5 @@
 import itertools
 
-from sage.rings.polynomial.multi_polynomial_sequence import PolynomialSequence
-
 def small_roots(f, bounds, m=1, d=None):
 	if not d:
 		d = f.degree()
@@ -12,13 +10,11 @@ def small_roots(f, bounds, m=1, d=None):
 	f /= f.coefficients().pop(0)
 	f = f.change_ring(ZZ)
 
-	G = PolynomialSequence([], f.parent())
+	G = Sequence([], f.parent())
 	for i in range(m+1):
-		power = N^(m-i) * f^i
+		base = N^(m-i) * f^i
 		for shifts in itertools.product(range(d), repeat=f.nvariables()):
-			g = power
-			for variable, shift in zip(f.variables(), shifts):
-				g *= variable^shift
+			g = base * prod(map(power, f.variables(), shifts))
 			G.append(g)
 
 	B, monomials = G.coefficient_matrix()
@@ -33,23 +29,18 @@ def small_roots(f, bounds, m=1, d=None):
 	B = B.change_ring(QQ)
 	for i, factor in enumerate(factors):
 		B.rescale_col(i, 1/factor)
-	B = B.change_ring(ZZ)
 
 	H = Sequence([], f.parent().change_ring(QQ))
-	for h in B*monomials:
-		if h.is_zero():
-			continue
-		H.append(h.change_ring(QQ))
+	for h in filter(None, B*monomials):
+		H.append(h)
 		I = H.ideal()
 		if I.dimension() == -1:
 			H.pop()
 		elif I.dimension() == 0:
-			V = I.variety(ring=ZZ)
-			if V:
-				roots = []
-				for root in V:
-					root = map(R, map(root.__getitem__, f.variables()))
-					roots.append(tuple(root))
-				return roots
+			roots = []
+			for root in I.variety(ring=ZZ):
+				root = tuple(R(root[var]) for var in f.variables())
+				roots.append(root)
+			return roots
 
 	return []

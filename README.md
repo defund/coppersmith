@@ -1,5 +1,5 @@
 # coppersmith
-A totally generic implementation of Coppersmith's method that finds small roots for any modular multivariate polynomial. In particular, this supports:
+A totally generic implementation of Coppersmith's method that finds small roots for any modular multivariate polynomial. For example, this supports:
 * Univariate, bivariate, trivariate, theoretically n-variate polynomials.
 * Arbitrary monomials and degrees.
 * Unknown moduli, assuming you know some multiple.
