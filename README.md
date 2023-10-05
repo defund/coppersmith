@@ -13,15 +13,6 @@ See [examples.sage](examples.sage) for confirmed use cases. For general use, the
 * `m` - Determines how many higher powers of `f` and `N` to use. Defaults to 1.
 * `d` - Determines how many variable shifts to use. Defaults to `f.degree()`.
 
-Sage by default handles univariate polynomials with a special class. On the other hand, `small_roots` requires that the polynomial ring be implemented as multivariate. In order to do that for a single variable, you must explicitly pass in 1 like so:
-
-```sage
-sage: P.<x> = PolynomialRing(ZZ); P
-Univariate Polynomial Ring in x over Integer Ring
-sage: P.<x> = PolynomialRing(ZZ, 1); P
-Multivariate Polynomial Ring in x over Integer Ring
-```
-
 ## References
 * https://cr.yp.to/bib/2001/coppersmith.pdf
 * https://web.eecs.umich.edu/~cpeikert/lic13
