@@ -5,7 +5,7 @@ def univariate():
 	bounds = (floor(N^.3),)
 	roots = tuple(randrange(bound) for bound in bounds)
 	R = Integers(N)
-	P.<x> = PolynomialRing(R, 1)
+	P.<x> = PolynomialRing(R)
 	monomials = [x, x^2, x^3]
 	f = sum(randrange(N)*monomial for monomial in monomials)
 	f -= f(*roots)

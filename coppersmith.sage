@@ -4,6 +4,10 @@ def small_roots(f, bounds, m=1, d=None):
 	if not d:
 		d = f.degree()
 
+	if isinstance(f, Polynomial):
+		x, = polygens(f.base_ring(), f.variable_name(), 1)
+		f = f(x)
+
 	R = f.base_ring()
 	N = R.cardinality()
 	
